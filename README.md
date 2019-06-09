@@ -1,4 +1,4 @@
-#Versionamiento de archivo de base de datos distribuidas
+# Versionamiento de archivo de base de datos distribuidas
 
-###Ejemplo 
+### Ejemplo 
 **DBschema**
