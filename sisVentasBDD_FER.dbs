@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="modelo BDD" id="Project_2d929d3" template="Default" database="MySql" >
+	<schema name="modelo bdd" schemaname="modelo bdd" >
+		<table name="articulo" >
+			<column name="id_artic" type="int" jt="4" mandatory="y" />
+			<column name="nom_artic" type="varchar" length="150" jt="12" />
+			<column name="prec_artic" type="decimal" jt="3" />
+			<column name="marc_artic" type="varchar" length="100" jt="12" />
+			<column name="des_artic" type="text" jt="-1" />
+			<column name="fec_venc_artic" type="date" jt="91" />
+			<column name="id_tip" type="int" jt="4" />
+			<column name="nit_tienda" type="int" jt="4" />
+			<index name="pk_articulo_id_artic" unique="PRIMARY_KEY" >
+				<column name="id_artic" />
+			</index>
+			<fk name="fk_articulo_tip_artic" to_schema="modelo bdd" to_table="tip_artic" >
+				<fk_column name="id_tip" pk="id_tip" />
+			</fk>
+			<fk name="fk_articulo_tienda" to_schema="modelo bdd" to_table="tienda" >
+				<fk_column name="nit_tienda" pk="nit_tienda" />
+			</fk>
+			<storage><![CDATA[engine=InnoDB]]></storage>
+		</table>
+		<table name="caja" >
+			<column name="id_caja" type="int" jt="4" mandatory="y" />
+			<column name="num_caja" type="smallint" jt="5" />
+			<index name="pk_caja_id_caja" unique="PRIMARY_KEY" >
+				<column name="id_caja" />
+			</index>
+			<storage><![CDATA[engine=InnoDB]]></storage>
+		</table>
+		<table name="calificacion" >
+			<column name="id_calif" type="int" jt="4" mandatory="y" />
+			<column name="puntuacion" type="smallint" jt="5" />
+			<column name="fec_calif" type="date" jt="91" />
+			<column name="id_promo" type="int" jt="4" />
+			<index name="pk_calificacion_id_calif" unique="PRIMARY_KEY" >
+				<column name="id_calif" />
+			</index>
+			<fk name="fk_calificacion_promocion" to_schema="modelo bdd" to_table="promocion" >
+				<fk_column name="id_promo" pk="id_promo" />
+			</fk>
+			<storage><![CDATA[engine=InnoDB]]></storage>
+		</table>
+		<table name="cargo" >
+			<column name="id_cargo" type="int" jt="4" mandatory="y" />
+			<column name="nom_cargo" type="varchar" length="150" jt="12" />
+			<index name="pk_cargo_id_cargo" unique="PRIMARY_KEY" >
+				<column name="id_cargo" />
+			</index>
+			<index name="unq_cargo_nom_cargo" unique="UNIQUE" >
+				<column name="nom_cargo" />
+			</index>
+			<storage><![CDATA[engine=InnoDB]]></storage>
+		</table>
+		<table name="cliente" >
+			<column name="id_clien" type="int" jt="4" mandatory="y" />
+			<column name="nom_clien" type="varchar" length="70" jt="12" />
+			<column name="ape_pat_clien" type="varchar" length="70" jt="12" />
+			<column name="ape_mat_clien" type="varchar" length="70" jt="12" />
+			<column name="cat_clien" type="varchar" length="100" jt="12" />
+			<column name="telf_clien" type="int" jt="4" />
+			<column name="email_clien" type="varchar" length="150" jt="12" />
+			<column name="id_promo" type="int" jt="4" />
+			<index name="pk_cliente_id_clien" unique="PRIMARY_KEY" >
+				<column name="id_clien" />
+			</index>
+			<fk name="fk_cliente_promocion" to_schema="modelo bdd" to_table="promocion" >
+				<fk_column name="id_promo" pk="id_promo" />
+			</fk>
+			<storage><![CDATA[engine=InnoDB]]></storage>
+		</table>
+		<table name="contrato" >
+			<column name="id_contr" type="int" jt="4" mandatory="y" />
+			<column name="des_contr" type="long varchar" jt="-1" />
+			<column name="fec_ini_contr" type="date" jt="91" />
+			<column name="fec_fin_contr" type="date" jt="91" />
+			<column name="sueld_contrat" type="decimal" jt="3" />
+			<column name="id_cargo" type="int" jt="4" />
+			<index name="pk_contacto_id_conta" unique="PRIMARY_KEY" >
+				<column name="id_contr" />
+			</index>
+			<fk name="fk_contrato_cargo" to_schema="modelo bdd" to_table="cargo" >
+				<fk_column name="id_cargo" pk="nom_cargo" />
+			</fk>
+			<storage><![CDATA[engine=InnoDB]]></storage>
+		</table>
+		<table name="detalle_venta" >
+			<column name="id_detal" type="int" jt="4" mandatory="y" />
+			<column name="cant_detal" type="int" jt="4" />
+			<column name="desc_detal" type="text" jt="-1" />
+			<column name="prec_total" type="decimal" jt="3" />
+			<column name="fec_detal" type="datetime" jt="93" />
+			<column name="id_venta" type="int" jt="4" />
+			<column name="id_clien" type="int" jt="4" />
+			<index name="pk_detalle_venta_id_detal" unique="PRIMARY_KEY" >
+				<column name="id_detal" />
+			</index>
+			<fk name="fk_detalle_venta_venta" to_schema="modelo bdd" to_table="venta" >
+				<fk_column name="id_venta" pk="id_venta" />
+			</fk>
+			<fk name="fk_detalle_venta_cliente" to_schema="modelo bdd" to_table="cliente" >
+				<fk_column name="id_clien" pk="id_clien" />
+			</fk>
+			<storage><![CDATA[engine=InnoDB]]></storage>
+		</table>
+		<table name="empleado" >
+			<column name="id_emplea" type="int" jt="4" mandatory="y" />
+			<column name="nom_emplea" type="varchar" length="70" jt="12" />
+			<column name="ap_pat_emplea" type="varchar" length="65" jt="12" />
+			<column name="ap_mat_emplea" type="varchar" length="65" jt="12" />
+			<column name="telf_emplea" type="smallint" jt="5" />
+			<column name="corr_emplea" type="varchar" length="150" jt="12" />
+			<column name="nit_tienda" type="int" jt="4" />
+			<column name="id_turno" type="int" jt="4" />
+			<column name="id_cargo" type="int" jt="4" />
+			<column name="id_contr" type="int" jt="4" />
+			<index name="pk_empleado_id_emplea" unique="PRIMARY_KEY" >
+				<column name="id_emplea" />
+			</index>
+			<fk name="fk_empleado_tienda" to_schema="modelo bdd" to_table="tienda" >
+				<fk_column name="nit_tienda" pk="nit_tienda" />
+			</fk>
+			<fk name="fk_empleado_turno" to_schema="modelo bdd" to_table="turno" >
+				<fk_column name="id_turno" pk="id_turno" />
+			</fk>
+			<fk name="fk_empleado_cargo" to_schema="modelo bdd" to_table="cargo" >
+				<fk_column name="id_cargo" pk="id_cargo" />
+			</fk>
+			<fk name="fk_empleado_contrato" to_schema="modelo bdd" to_table="contrato" >
+				<fk_column name="id_contr" pk="id_contr" />
+			</fk>
+			<storage><![CDATA[engine=InnoDB]]></storage>
+		</table>
+		<table name="medio" >
+			<column name="id_medio" type="int" jt="4" mandatory="y" />
+			<column name="nom_medio" type="varchar" length="150" jt="12" />
+			<column name="tip_medio" type="varchar" length="100" jt="12" />
+			<column name="fec_ini_emi" type="date" jt="91" />
+			<column name="fec_fin_emi" type="date" jt="91" />
+			<column name="dir_medio" type="varchar" length="255" jt="12" />
+			<column name="id_promo" type="int" jt="4" />
+			<index name="pk_medio_id_medio" unique="PRIMARY_KEY" >
+				<column name="id_medio" />
+			</index>
+			<fk name="fk_medio_promocion" to_schema="modelo bdd" to_table="promocion" >
+				<fk_column name="id_promo" pk="id_promo" />
+			</fk>
+			<storage><![CDATA[engine=InnoDB]]></storage>
+		</table>
+		<table name="paquete" >
+			<column name="id_paque" type="int" jt="4" mandatory="y" />
+			<column name="nom_paque" type="varchar" length="150" jt="12" />
+			<column name="cant_paque" type="int" jt="4" />
+			<column name="id_artic" type="int" jt="4" />
+			<index name="pk_paquete_id_paque" unique="PRIMARY_KEY" >
+				<column name="id_paque" />
+			</index>
+			<fk name="fk_paquete_articulo" to_schema="modelo bdd" to_table="articulo" >
+				<fk_column name="id_artic" pk="id_artic" />
+			</fk>
+			<storage><![CDATA[engine=InnoDB]]></storage>
+		</table>
+		<table name="pedid" >
+			<column name="id_pedid" type="int" jt="4" mandatory="y" />
+			<column name="cant_pedid" type="int" jt="4" />
+			<column name="prec_pedid" type="decimal" jt="3" />
+			<column name="fec_pedid" type="date" jt="91" />
+			<column name="id_artic" type="int" jt="4" />
+			<column name="id_provee" type="int" jt="4" />
+			<column name="id_emplea" type="int" jt="4" />
+			<index name="pk_pedid_id_pedid" unique="PRIMARY_KEY" >
+				<column name="id_pedid" />
+			</index>
+			<fk name="fk_pedid_articulo" to_schema="modelo bdd" to_table="articulo" >
+				<fk_column name="id_artic" pk="id_artic" />
+			</fk>
+			<fk name="fk_pedid_proveedor" to_schema="modelo bdd" to_table="proveedor" >
+				<fk_column name="id_provee" pk="id_provee" />
+			</fk>
+			<fk name="fk_pedid_empleado" to_schema="modelo bdd" to_table="empleado" >
+				<fk_column name="id_emplea" pk="id_emplea" />
+			</fk>
+			<storage><![CDATA[engine=InnoDB]]></storage>
+		</table>
+		<table name="promocion" >
+			<column name="id_promo" type="int" jt="4" mandatory="y" />
+			<column name="nom_promo" type="varchar" length="150" jt="12" />
+			<column name="fec_ini_promo" type="date" jt="91" />
+			<column name="fec_fin_promo" type="date" jt="91" />
+			<column name="prec_origin" type="decimal" jt="3" />
+			<column name="id_paque" type="int" jt="4" />
+			<column name="id_detal" type="int" jt="4" />
+			<index name="pk_promocion_id_promo" unique="PRIMARY_KEY" >
+				<column name="id_promo" />
+			</index>
+			<fk name="fk_promocion_paquete" to_schema="modelo bdd" to_table="paquete" >
+				<fk_column name="id_paque" pk="id_paque" />
+			</fk>
+			<fk name="fk_promocion_detalle_venta" to_schema="modelo bdd" to_table="detalle_venta" >
+				<fk_column name="id_detal" pk="id_detal" />
+			</fk>
+			<storage><![CDATA[engine=InnoDB]]></storage>
+		</table>
+		<table name="proveedor" >
+			<column name="id_provee" type="int" jt="4" mandatory="y" />
+			<column name="telf_prove" type="int" jt="4" />
+			<column name="dir_prove" type="varchar" length="255" jt="12" />
+			<column name="email_prove" type="varchar" length="150" jt="12" />
+			<index name="pk_proveedor_id_provee" unique="PRIMARY_KEY" >
+				<column name="id_provee" />
+			</index>
+			<storage><![CDATA[engine=InnoDB]]></storage>
+		</table>
+		<table name="sector" >
+			<column name="id_sector" type="int" jt="4" mandatory="y" />
+			<column name="nom_sector" type="varchar" length="150" jt="12" />
+			<column name="dimensiones" type="varchar" length="150" jt="12" />
+			<column name="dir_sector" type="varchar" length="200" jt="12" />
+			<index name="pk_sector_id_sector" unique="PRIMARY_KEY" >
+				<column name="id_sector" />
+			</index>
+			<storage><![CDATA[engine=InnoDB]]></storage>
+		</table>
+		<table name="stock_almac" >
+			<column name="id_almac" type="int" jt="4" mandatory="y" />
+			<column name="stock" type="int" jt="4" />
+			<column name="pla_orden" type="int" jt="4" />
+			<column name="id_artic" type="int" jt="4" />
+			<index name="pk_stock_almac_id_almac" unique="PRIMARY_KEY" >
+				<column name="id_almac" />
+			</index>
+			<fk name="fk_stock_almac_articulo" to_schema="modelo bdd" to_table="articulo" >
+				<fk_column name="id_artic" pk="id_artic" />
+			</fk>
+			<storage><![CDATA[engine=InnoDB]]></storage>
+		</table>
+		<table name="table" />
+		<table name="tienda" >
+			<column name="nit_tienda" type="int" jt="4" mandatory="y" />
+			<column name="nom_tiend" type="varchar" length="150" jt="12" />
+			<column name="dir_tiend" type="varchar" length="150" jt="12" />
+			<column name="hor-atenc" type="time" jt="92" />
+			<index name="pk_tienda_nit_tienda" unique="PRIMARY_KEY" >
+				<column name="nit_tienda" />
+			</index>
+			<storage><![CDATA[engine=InnoDB]]></storage>
+		</table>
+		<table name="tip_artic" >
+			<column name="id_tip" type="int" jt="4" mandatory="y" />
+			<column name="nom_tip" type="varchar" length="100" jt="12" />
+			<column name="id_sector" type="int" jt="4" />
+			<index name="pk_tip_artic_id_tip" unique="PRIMARY_KEY" >
+				<column name="id_tip" />
+			</index>
+			<fk name="fk_tip_artic_sector" to_schema="modelo bdd" to_table="sector" >
+				<fk_column name="id_sector" pk="id_sector" />
+			</fk>
+			<storage><![CDATA[engine=InnoDB]]></storage>
+		</table>
+		<table name="turno" >
+			<column name="id_turno" type="int" jt="4" mandatory="y" />
+			<column name="turno" type="varchar" length="50" jt="12" />
+			<column name="id_contrato" type="int" jt="4" />
+			<column name="id_caja" type="int" jt="4" />
+			<index name="pk_turno_id_turno" unique="PRIMARY_KEY" >
+				<column name="id_turno" />
+			</index>
+			<fk name="fk_turno_caja" to_schema="modelo bdd" to_table="caja" >
+				<fk_column name="id_caja" pk="id_caja" />
+			</fk>
+			<storage><![CDATA[engine=InnoDB]]></storage>
+		</table>
+		<table name="venta" >
+			<column name="id_venta" type="int" jt="4" mandatory="y" />
+			<column name="tip_pago" type="varchar" length="150" jt="12" />
+			<column name="id_emplea" type="int" jt="4" />
+			<column name="id_clien" type="int" jt="4" />
+			<index name="pk_venta_id_venta" unique="PRIMARY_KEY" >
+				<column name="id_venta" />
+			</index>
+			<fk name="fk_venta_empleado" to_schema="modelo bdd" to_table="empleado" >
+				<fk_column name="id_emplea" pk="id_emplea" />
+			</fk>
+			<fk name="fk_venta_cliente" to_schema="modelo bdd" to_table="cliente" >
+				<fk_column name="id_clien" pk="id_clien" />
+			</fk>
+			<storage><![CDATA[engine=InnoDB]]></storage>
+		</table>
+	</schema>
+	<layout name="Default Layout" id="Layout_59ece41" show_relation="columns" >
+		<entity schema="modelo bdd" name="sector" color="00FFFF" x="48" y="48" />
+		<entity schema="modelo bdd" name="tip_artic" color="C1D8EE" x="48" y="256" />
+		<entity schema="modelo bdd" name="tienda" color="C1D8EE" x="240" y="48" />
+		<entity schema="modelo bdd" name="stock_almac" color="C1D8EE" x="320" y="160" />
+		<entity schema="modelo bdd" name="articulo" color="C1D8EE" x="240" y="336" />
+		<entity schema="modelo bdd" name="pedid" color="C1D8EE" x="448" y="352" />
+		<entity schema="modelo bdd" name="proveedor" color="C1D8EE" x="432" y="560" />
+		<entity schema="modelo bdd" name="cargo" color="C1D8EE" x="720" y="48" />
+		<entity schema="modelo bdd" name="empleado" color="C1D8EE" x="448" y="48" />
+		<entity schema="modelo bdd" name="detalle_venta" color="C1D8EE" x="880" y="640" />
+		<entity schema="modelo bdd" name="paquete" color="C1D8EE" x="48" y="576" />
+		<entity schema="modelo bdd" name="medio" color="C1D8EE" x="448" y="800" />
+		<entity schema="modelo bdd" name="promocion" color="C1D8EE" x="224" y="864" />
+		<entity schema="modelo bdd" name="calificacion" color="C1D8EE" x="80" y="752" />
+		<entity schema="modelo bdd" name="caja" color="C1D8EE" x="720" y="432" />
+		<entity schema="modelo bdd" name="turno" color="C1D8EE" x="736" y="208" />
+		<entity schema="modelo bdd" name="contrato" color="C1D8EE" x="880" y="96" />
+		<entity schema="modelo bdd" name="venta" color="C1D8EE" x="624" y="624" />
+		<entity schema="modelo bdd" name="cliente" color="C1D8EE" x="240" y="560" />
+	</layout>
+</project>
